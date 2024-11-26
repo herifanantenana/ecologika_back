@@ -95,7 +95,7 @@ export const getPathDestination = (mimeType: string, fieldName: string) => {
 	return path.resolve(__dirname, "../../uploads", getTypeCategoryFile(mimeType, fieldName));
 }
 export const getUrlFile = (req: Request, file: Express.Multer.File) => {
-	return `${req.protocol}://${req.get("host")}/${getTypeCategoryFile(file.mimetype, file.fieldname)}/${file.filename.split(' ').join('_')}`;
+	return `${req.protocol}://${req.get("host")}/uploads/${getTypeCategoryFile(file.mimetype, file.fieldname)}/${file.filename.split(' ').join('_')}`;
 }
 
 export const secureFolder = async (path: PathLike) => {

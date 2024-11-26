@@ -7,5 +7,4 @@ const rootRouter: Router = Router();
 rootRouter.use("/auth", authRouter);
 rootRouter.use("/users", usersRouter);
 
-
 export default rootRouter;
