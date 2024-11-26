@@ -7,7 +7,7 @@ import { ErrorCode } from '../exceptions/root';
 import { sendEmail } from '../helpers/email';
 import { verifyToken } from '../helpers/jwtToken';
 import { LoginSchema, SendAuthLinkEmailSchema, SignupAuthLinkEmailSchema } from '../schemas/auth';
-import { EMAIL_SECRET_KEY, FRONT_URL, JWT_SECRET_KEY } from '../secrets';
+import { EMAIL_SECRET_KEY, FRONT_URL_AUTH_CONFIRM_LINK, JWT_SECRET_KEY } from '../secrets';
 
 export const sendAuthLinkEmail = async (req: Request, res: Response) => {
 	let validateData = SendAuthLinkEmailSchema.parse(req.body);
@@ -22,15 +22,14 @@ export const sendAuthLinkEmail = async (req: Request, res: Response) => {
 	const option = {
 		to: validateData.email,
 		subject: "Authentication Link",
-		html: `${FRONT_URL}/${token}`
+		html: `${FRONT_URL_AUTH_CONFIRM_LINK}/${token}`
 	}
 
 	let user = await prismaClient.user.findFirst({ where: { email: validateData.email } });
 	if (user)
 		throw new BadRequestsException("User already exists!", ErrorCode.USER_ALREADY_EXIST);
 	await sendEmail(option);
-
-	res.json({ option, token });
+	res.sendStatus(200);
 }
 
 export const signupAuthLinkEmail = async (req: Request, res: Response) => {

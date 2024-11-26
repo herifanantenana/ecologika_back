@@ -4,7 +4,7 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "nodemon",
-		"start": "rm -rf ./dist && npx concurrently \"npx tsc --watch\" \"nodemon dist/index.js\"",
+		"start": "npx concurrently \"npx tsc --watch\" \"nodemon dist/index.js\"",
 		"build": "npx tsc",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -25,10 +25,12 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^5.22.0",
+		"@types/multer": "^1.4.12",
 		"bcrypt": "^5.1.1",
 		"dotenv": "^16.4.5",
 		"express": "^4.21.1",
 		"jsonwebtoken": "^9.0.2",
+		"multer": "^1.4.5-lts.1",
 		"nodemailer": "^6.9.16",
 		"zod": "^3.23.8"
 	}

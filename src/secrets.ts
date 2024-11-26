@@ -7,4 +7,4 @@ export const JWT_SECRET_KEY = process.env.EMAIL_SECRET_KEY!;
 export const EMAIL_SECRET_KEY = process.env.EMAIL_SECRET_KEY!;
 export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD!;
 export const EMAIL_SENDER = process.env.EMAIL_SENDER!;
-export const FRONT_URL = process.env.FRONT_URL!;
+export const FRONT_URL_AUTH_CONFIRM_LINK = process.env.FRONT_URL_AUTH_CONFIRM_LINK!;

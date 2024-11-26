@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { MulterError } from "multer";
 import { ZodError } from "zod";
 import { InternalException, UnprocessableEntityException } from '../exceptions/internal-exception';
 import { ErrorCode, HttpException } from '../exceptions/root';
@@ -27,7 +28,7 @@ export const errorHandlerThis = (method: Function) => {
 			else if (error instanceof ZodError)
 				exception = new UnprocessableEntityException("Unprocessable entity!", ErrorCode.UNPROCESSABLE_ENTITY, error)
 			else
-				exception = new InternalException("Something went wrong!", ErrorCode.INTERNAL_EXCEPTION, error)
+				exception = new InternalException("Something wrong!", ErrorCode.INTERNAL_EXCEPTION, error)
 			next(exception);
 		}
 		finally {
