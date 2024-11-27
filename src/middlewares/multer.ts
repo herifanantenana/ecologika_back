@@ -13,13 +13,7 @@ const upload = multer({
 	storage: multer.memoryStorage(),
 	fileFilter: async (req, file, callback) => {
 		if (validMimeTypes.has(file.mimetype)) {
-			const fileDestination = getPathDestination(file.mimetype, file.fieldname)
-			try {
-				await secureFolder(fileDestination);
-			} catch (error) {
-				callback(new BadRequestsException("Could not create the folder!", ErrorCode.INVALID_FILE_UPLOAD))
-			}
-			file.destination = fileDestination;
+			file.destination = getPathDestination(file.mimetype, file.fieldname)
 			file.filename = `${Date.now()}-${file.originalname}`;
 			callback(null, true);
 		}
@@ -33,6 +27,11 @@ const upload = multer({
 export const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
 	const afterNext = async () => {
 		if (req.file) {
+			try {
+				await secureFolder(req.file.destination);
+			} catch (error) {
+				throw new BadRequestsException("Could not create the folder!", ErrorCode.INVALID_FILE_UPLOAD)
+			}
 			const filePath = path.join(req.file.destination, req.file.filename);
 			try {
 				await fs.promises.writeFile(filePath, req.file.buffer);
@@ -42,6 +41,11 @@ export const uploadMiddleware = (req: Request, res: Response, next: NextFunction
 		} else if (req.files) {
 			try {
 				const filePromises = Object.values(req.files).flat().map(async (file) => {
+					try {
+						await secureFolder(file.destination);
+					} catch (error) {
+						throw new BadRequestsException("Could not create the folder!", ErrorCode.INVALID_FILE_UPLOAD)
+					}
 					const filePath = path.join(file.destination, file.filename);
 					return await fs.promises.writeFile(filePath, file.buffer);
 				});
