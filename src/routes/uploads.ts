@@ -16,5 +16,4 @@ uploadsRouter.get("/:mimetype/:folder/:filename", err_hdl((req: Request, res: Re
 	res.sendFile(filePath);
 }))
 
-
 export default uploadsRouter;
