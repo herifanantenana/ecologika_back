@@ -9,3 +9,4 @@ export const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD!;
 export const EMAIL_SENDER = process.env.EMAIL_SENDER!;
 export const FRONT_URL_AUTH_CONFIRM_LINK = process.env.FRONT_URL_AUTH_CONFIRM_LINK!;
 export const GEMINI_API_KEY = process.env.GEMINI_API_KEY!;
+export const STRIPE_API_KEY = process.env.STRIPE_API_KEY!;
